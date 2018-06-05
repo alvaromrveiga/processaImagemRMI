@@ -8,12 +8,10 @@ public class Cliente {
 
     public static void main(String args[]) {
         try {
-            Hello serv = (Hello) Naming.lookup("//192.168.0.105/ServidorHello");
-            String retorno = serv.sayHello();
-            System.out.println(retorno);
+            InterfaceRemota imagem = (InterfaceRemota) Naming.lookup("//localhost/pedacoImagem");
+            System.out.println(imagem.getId());
         } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 }
