@@ -15,6 +15,8 @@ public class Servidor {
 
         DivisorImagem imagemTotal = new DivisorImagem("C:\\Users\\Usuário\\Downloads\\leao.png");
         BufferedImage partes[] = imagemTotal.divideImagemPor(10);
+        
+      //imagemTotal.salvaPartes(partes); //Salva a divisão de partes no servidor, serve para teste, deixar comentado na execução verdadeira
 
         try {
             InterfaceRemota pedacoImagem = new PedacoImagem(partes[0], 60);
