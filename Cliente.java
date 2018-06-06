@@ -29,8 +29,8 @@ public class Cliente {
             InterfaceRemota imagem = (InterfaceRemota) Naming.lookup("//" + IP + "/pedacoImagem" + id);
             System.out.println(imagem.getId());
 
-            System.out.println("Processando...");
-            while (true);
+            //System.out.println("Processando...");
+            //while (true);
 
         } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
