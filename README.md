@@ -14,3 +14,4 @@ Para adicionar acesso a algum método pelo cliente, o método desejado deve ser 
 
 #### A fazer
  - Criar método de processamento nas classes *InterfaceRemota* e *PedacoImagem*.
+ - Cliente envia mensagem avisando o servidor que terminou o processamento.
