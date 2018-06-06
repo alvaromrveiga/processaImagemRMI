@@ -42,7 +42,7 @@ public class DivisorImagem {
     }
 
     private BufferedImage divideImagem(int xInicial, int yInicial, int comprimentoParte, int alturaParte) {
-        return (BufferedImage) imagem.getSubimage(xInicial, yInicial, comprimentoParte, alturaParte);
+        return imagem.getSubimage(xInicial, yInicial, comprimentoParte, alturaParte);
     }
 
     public void salvaPartes(BufferedImage[] partes) {

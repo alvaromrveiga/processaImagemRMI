@@ -23,4 +23,9 @@ public class PedacoImagem extends UnicastRemoteObject implements InterfaceRemota
     public int getId() {
         return id;
     }
+
+    @Override
+    public void processaImagem() throws RemoteException {
+        //TODO
+    }
 }

@@ -11,7 +11,7 @@ public class Servidor {
     private static final int PORTA_RMI = 1099;
     private static final int PORTA_SOCKET = 12345;
 
-    private static final int DIVIDE_IMAGEM_EM = 10; //número de clientes
+    private static final int DIVIDE_IMAGEM_EM = 5; //número de clientes
 
     public static void main(String args[]) {
 
@@ -26,11 +26,10 @@ public class Servidor {
 
     private static BufferedImage[] divideImagem(String caminhoImagem) {
         DivisorImagem imagemTotal = new DivisorImagem(caminhoImagem);
-        
+
         BufferedImage partes[] = imagemTotal.divideImagemPor(DIVIDE_IMAGEM_EM);
-        
+
         //imagemTotal.salvaPartes(partes); //Salva a divisão de partes no servidor, serve para teste, deixar comentado na execução verdadeira
-        
         return partes;
     }
 

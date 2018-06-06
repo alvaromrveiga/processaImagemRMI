@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.Socket;
@@ -28,10 +27,11 @@ public class Cliente {
         try {
             InterfaceRemota imagem = (InterfaceRemota) Naming.lookup("//" + IP + "/pedacoImagem" + id);
             System.out.println(imagem.getId());
-
-            //System.out.println("Processando...");
-            //while (true);
-
+            
+            System.out.println("Processando...");
+            imagem.processaImagem();
+            
+            avisaServidorTermino();
         } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -44,5 +44,9 @@ public class Cliente {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    private static void avisaServidorTermino() {
+        //TODO
     }
 }

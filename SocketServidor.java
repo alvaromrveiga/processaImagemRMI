@@ -8,20 +8,20 @@ import java.util.logging.Logger;
 
 public class SocketServidor {
 
-    private final int porta;
+    private final int PORTA;
     private ServerSocket servidor;
     private final String IP = BuscadorIPV4.getIPV4();
 
     public SocketServidor(int porta) {
-        this.porta = porta;
+        this.PORTA = porta;
         abreServidor();
     }
 
     private void abreServidor() {
         try {
-            servidor = new ServerSocket(porta);
+            servidor = new ServerSocket(PORTA);
 
-            System.out.println("Servidor iniciado no IP " + IP + " na porta " + porta);
+            System.out.println("Servidor iniciado no IP " + IP + " na porta " + PORTA);
         } catch (IOException ex) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         }
