@@ -13,6 +13,4 @@ Para acessar e processar um método pelo cliente uma implementação da classe r
 Para adicionar acesso a algum método pelo cliente, o método desejado deve ser criado na classe *InterfaceRemota* e deve dar *throws RemoteException* e depois implementado na classe PedacoImagem.
 
 #### A fazer
- - Adicionar loop no Servidor para criar *Naming.rebind* para cada parte da imagem;
- - Enviar uma mensagem para o cliente com o número do serviço que ele deve acessar contendo a imagem que ele deve processar, assim não será necessário mudar o nome do serviço no cliente antes de executar; (Usar Java Socket - exemplo na pasta do projeto no Google Drive)
  - Criar método de processamento nas classes *InterfaceRemota* e *PedacoImagem*.
