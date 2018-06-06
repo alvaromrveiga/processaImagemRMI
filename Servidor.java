@@ -26,8 +26,12 @@ public class Servidor {
 
     private static BufferedImage[] divideImagem(String caminhoImagem) {
         DivisorImagem imagemTotal = new DivisorImagem(caminhoImagem);
+        
+        BufferedImage partes[] = imagemTotal.divideImagemPor(DIVIDE_IMAGEM_EM);
+        
         //imagemTotal.salvaPartes(partes); //Salva a divisão de partes no servidor, serve para teste, deixar comentado na execução verdadeira
-        return imagemTotal.divideImagemPor(DIVIDE_IMAGEM_EM);
+        
+        return partes;
     }
 
     private static void criaServicoRmi(BufferedImage parte, int id) {
