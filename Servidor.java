@@ -16,7 +16,6 @@ public class Servidor {
     public static void main(String args[]) {
 
         BufferedImage partes[] = divideImagem("C:\\Users\\alvaromrveiga\\Downloads\\arvore.jpg");
-        //imagemTotal.salvaPartes(partes); //Salva a divisão de partes no servidor, serve para teste, deixar comentado na execução verdadeira
 
         SocketServidor socketServidor = abreServidor();
 
@@ -27,6 +26,7 @@ public class Servidor {
 
     private static BufferedImage[] divideImagem(String caminhoImagem) {
         DivisorImagem imagemTotal = new DivisorImagem(caminhoImagem);
+        //imagemTotal.salvaPartes(partes); //Salva a divisão de partes no servidor, serve para teste, deixar comentado na execução verdadeira
         return imagemTotal.divideImagemPor(DIVIDE_IMAGEM_EM);
     }
 
