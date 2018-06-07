@@ -1,5 +1,6 @@
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -14,13 +15,27 @@ public class SocketCliente {
 
     }
 
+    public void enviaMensagem(String mensagem) {
+        PrintStream saida = declaraPrintStream();
+        saida.println(mensagem);
+    }
+
+    private PrintStream declaraPrintStream() {
+        try {
+            return new PrintStream(socket.getOutputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(SocketCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public String ouveMensagem() {
         Scanner entrada = inicializaEntrada();
 
         while (entrada.hasNextLine()) {
             return entrada.nextLine();
         }
-        
+
         return null;
     }
 
