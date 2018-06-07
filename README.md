@@ -14,5 +14,5 @@ Para adicionar acesso a algum método pelo cliente, o método desejado deve ser 
 
 #### A fazer
  - Criar método de processamento nas classes *InterfaceRemota* e *PedacoImagem*;
- - Cliente envia mensagem avisando o servidor que terminou o processamento;
- - Thread servidor ouve mensagens de término de processamento dos clientes.
+ - Testar avisos de término dos clientes e recebimento dessas mensagens por parte do servidor;
+ - Criar método para salvar a imagem agrupando os pedaços usando as informações contidas sobre a imagem original na classe DivisorImagem. Alterar o nome da classe para algo mais compatível e criar o método que junta os pedaços dentro dela.
