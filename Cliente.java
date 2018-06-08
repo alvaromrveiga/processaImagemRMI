@@ -31,7 +31,7 @@ public class Cliente {
         try {
             LocateRegistry.getRegistry(IP, Servidor.PORTA_RMI + id);
             InterfaceRemota imagem = (InterfaceRemota) Naming.lookup("//" + IP + "/pedacoImagem" + id);
-            System.out.println(imagem.getId());
+            System.out.println("Você é o cliente responsável pelo pedaço " + imagem.getId() + " da imagem");
 
             System.out.println("Processando...");
             imagem.processaImagem();
