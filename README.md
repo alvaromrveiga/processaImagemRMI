@@ -11,8 +11,3 @@ A classe com o processamento deve ser uma interface que extende Remote, assim co
 Para acessar e processar um método pelo cliente uma implementação da classe remota deve ser registrada no *Naming.rebind* do Servidor.
 
 Para adicionar acesso a algum método pelo cliente, o método desejado deve ser criado na classe *InterfaceRemota* e deve dar *throws RemoteException* e depois implementado na classe PedacoImagem.
-
-#### A fazer
- - Criar método de processamento nas classes *InterfaceRemota* e *PedacoImagem*;
- - Testar avisos de término dos clientes e recebimento dessas mensagens por parte do servidor;
- - Criar método para salvar a imagem agrupando os pedaços usando as informações contidas sobre a imagem original na classe DivisorImagem. Alterar o nome da classe para algo mais compatível e criar o método que junta os pedaços dentro dela.
