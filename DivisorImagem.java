@@ -75,4 +75,8 @@ public class DivisorImagem {
 
         return tipoImagem;
     }
+
+    public String getCaminhoImagem() {
+        return arquivoImagem.getAbsolutePath();
+    }
 }

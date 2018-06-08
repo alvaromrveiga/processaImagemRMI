@@ -3,12 +3,13 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.Socket;
 import java.rmi.*;
+import java.rmi.registry.LocateRegistry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Cliente {
 
-    private static final String IP = "172.22.81.25";
+    private static final String IP = "192.168.0.121";
     private static final int PORTA_SOCKET = 12345;
 
     public static void main(String args[]) {
@@ -28,11 +29,13 @@ public class Cliente {
 
     private static void acessaServicoRmi(int id) {
         try {
+            LocateRegistry.getRegistry();
             InterfaceRemota imagem = (InterfaceRemota) Naming.lookup("//" + IP + "/pedacoImagem" + id);
             System.out.println(imagem.getId());
 
             System.out.println("Processando...");
             imagem.processaImagem();
+            System.out.println("Processamento concluído!");
         } catch (NotBoundException | MalformedURLException | RemoteException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -1,6 +1,7 @@
 
 import java.awt.image.BufferedImage;
 import java.net.*;
+import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -15,7 +16,9 @@ public class Servidor {
 
     public static void main(String args[]) {
 
-        BufferedImage partes[] = divideImagem("C:\\Users\\Usuário\\Downloads\\leao.png");
+        DivisorImagem divisorImagem = new DivisorImagem("C:\\Users\\Usuário\\Downloads\\leao.png");
+        BufferedImage partes[] = divisorImagem.divideImagemPor(QUANTIDADE_CLIENTES);
+        //divisorImagem.salvaPartes(partes); //Salva a divisão de partes no servidor, serve para teste, deixar comentado na execução verdadeira
 
         SocketServidor socketServidor = abreServidor();
 
@@ -25,33 +28,26 @@ public class Servidor {
         socketServidor.aguardaClientesProcessarem();
         System.out.println("\nTodos os clientes terminaram o processamento de sus respectivas partes da imagem");
 
-        salvaImagemAgrupada();
-        System.out.println("Os pedaços foram agrupados e a imagem foi salva!");
-    }
+        salvaImagemAgrupada(partes, divisorImagem.getCaminhoImagem());
+        System.out.println("\nOs pedaços foram agrupados e a imagem foi salva!");
 
-    private static BufferedImage[] divideImagem(String caminhoImagem) {
-        DivisorImagem imagemTotal = new DivisorImagem(caminhoImagem);
-
-        BufferedImage partes[] = imagemTotal.divideImagemPor(QUANTIDADE_CLIENTES);
-
-        //imagemTotal.salvaPartes(partes); //Salva a divisão de partes no servidor, serve para teste, deixar comentado na execução verdadeira
-        return partes;
+        System.exit(0); //Encerra o programa com sucesso
     }
 
     private static void criaServicoRmi(BufferedImage parte, int id) {
         try {
             InterfaceRemota pedacoImagem = new PedacoImagem(parte, id);
             LocateRegistry.createRegistry(PORTA_RMI + id);
-            Naming.rebind("pedacoImagem" + id, pedacoImagem);
-        } catch (RemoteException | MalformedURLException ex) {
-            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+            Naming.bind("pedacoImagem" + id, pedacoImagem);
+        } catch (RemoteException | MalformedURLException | AlreadyBoundException e) {
+            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, e);
             System.exit(0);
         }
     }
 
     private static SocketServidor abreServidor() {
         SocketServidor socketServidor = new SocketServidor(PORTA_SOCKET, QUANTIDADE_CLIENTES);
-        System.out.println("Servidor RMI iniciado no mesmo IP na porta base " + PORTA_RMI);
+        System.out.println("Servidor RMI iniciado no mesmo IP na porta base " + PORTA_RMI + "\n");
 
         return socketServidor;
     }
@@ -60,11 +56,13 @@ public class Servidor {
         for (int i = 0; i < QUANTIDADE_CLIENTES; i++) {
             socketServidor.enviaIdCliente(i);
 
+            socketServidor.iniciaCanalMensagemCliente(i);
+
             criaServicoRmi(partes[i], i);
         }
     }
 
-    private static void salvaImagemAgrupada() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private static void salvaImagemAgrupada(BufferedImage partes[], String caminho) {
+        new AgrupadorImagem(partes, caminho).agrupaSalvaImagem();
     }
 }

@@ -1,6 +1,5 @@
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,12 +12,12 @@ public class SocketServidor {
     private final int PORTA;
     private ServerSocket servidor;
     private final String IP = BuscadorIPV4.getIPV4();
-    private final InputStream entradaMensagensClientes[];
+    private final StatusCliente statusClientes[];
 
     public SocketServidor(int porta, int quantidadeClientes) {
         this.PORTA = porta;
         abreServidor();
-        entradaMensagensClientes = new InputStream[quantidadeClientes];
+        statusClientes = new StatusCliente[quantidadeClientes];
     }
 
     private void abreServidor() {
@@ -50,7 +49,7 @@ public class SocketServidor {
     private Socket esperaCliente(int id) {
         try {
             Socket socket = servidor.accept();
-            entradaMensagensClientes[id] = socket.getInputStream();
+            statusClientes[id] = new StatusCliente(socket.getInputStream());
             System.out.println("Nova conexão com o cliente " + socket.getInetAddress().getHostAddress() + " responsável pelo pedaco " + id + " da imagem");
             return socket;
         } catch (IOException ex) {
@@ -60,21 +59,62 @@ public class SocketServidor {
     }
 
     public void aguardaClientesProcessarem() {
-        for (int i = 0; i < entradaMensagensClientes.length; i++) {
-            if (isProcessamentoConcluido(entradaMensagensClientes[i], i)) {
+        for (StatusCliente statusCliente : statusClientes) {
+            if (isProcessamentoConcluido(statusCliente)) {
             }
         }
     }
 
-    private boolean isProcessamentoConcluido(InputStream cliente, int idCliente) {
-        Scanner entradaMensagensCliente = new Scanner(cliente);
+    private boolean isProcessamentoConcluido(StatusCliente cliente) {
+        while (true) {
+            dorme(100); //intervalo para verificar se o cliente já processou
+            if (cliente.isFinalizado()) {
+                return true;
+            }
+        }
+    }
+
+    private void dorme(long tempo_ms) {
+        try {
+            Thread.sleep(tempo_ms);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SocketServidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void iniciaCanalMensagemCliente(int idCliente) {
+        threadOuveMensagens(statusClientes[idCliente], idCliente);
+    }
+
+    private void threadOuveMensagens(final StatusCliente cliente, int idCliente) {
+
+        Runnable runnable = () -> {
+            ouveMensagens(cliente, idCliente);
+        };
+
+        //sem expressão lambda ficaria:
+        /* 
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                ouveMensagens(cliente, idCliente);
+            }
+        };
+         */
+        new Thread(runnable).start();
+    }
+
+    private boolean ouveMensagens(StatusCliente cliente, int idCliente) {
+        Scanner leitorMensagens = new Scanner(cliente.getEntradaMensagensServidor());
 
         while (true) {
-            while (entradaMensagensCliente.hasNextLine()) {
-                if (isIdCliente(entradaMensagensCliente.nextLine(), idCliente)) {
+            while (leitorMensagens.hasNextLine()) {
+                if (isIdCliente(leitorMensagens.nextLine(), idCliente)) {
+                    cliente.setFinalizado(true);
                     return true;
                 }
             }
+
         }
     }
 
