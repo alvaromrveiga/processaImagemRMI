@@ -29,7 +29,7 @@ public class Cliente {
 
     private static void acessaServicoRmi(int id) {
         try {
-            LocateRegistry.getRegistry();
+            LocateRegistry.getRegistry(IP, Servidor.PORTA_RMI + id);
             InterfaceRemota imagem = (InterfaceRemota) Naming.lookup("//" + IP + "/pedacoImagem" + id);
             System.out.println(imagem.getId());
 
