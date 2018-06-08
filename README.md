@@ -1,10 +1,11 @@
 # Processamento distribuído de imagens cartográficas usando Java RMI
 
 ### Passos de execução:
-1. Alterar o endereço da imagem na classe Servidor
-2. Executar servidor
-3. Alterar o endereço de rede no cliente de "localhost" para o IP impresso ao executar o servidor
-4. Executar clientes
+1. Alterar o endereço da imagem na classe Servidor;
+2. Alterar a variável *QUANTIDADE_CLIENTES* para a quantidade desejada de clientes no processamento da imagem;
+3. Executar servidor;
+4. Alterar a variável *IP* na classe cliente para o IP impresso na execução da classe Servidor;
+5. Executar clientes
 
 ### Explicação do funcionamento
 A classe com o processamento deve ser uma interface que extende Remote, assim como a classe PedacoImagem. 
